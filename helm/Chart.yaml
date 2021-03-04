@@ -1,0 +1,8 @@
+---
+name: pegacorn-fusionpbx
+sources:
+- https://github.com/PBXForums/fusionpbx-docker
+version: 1.0.0-SNAPSHOT
+version: 1.0.0-SNAPSHOT
+description: PBX call server.
+icon: img/icons/camel.svg

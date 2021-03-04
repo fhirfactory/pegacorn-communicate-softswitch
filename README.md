@@ -1,2 +1,2 @@
 # pegacorn-communicate-softswitch
-FreeSwitch deployment in Kubernetes
+Soft switch - based on FreeSwitch

@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    {{- if (.Values.dnsEntry) }} 
+    # From https://docs.microsoft.com/en-us/azure/aks/internal-lb#create-an-internal-load-balancer
+    service.beta.kubernetes.io/azure-load-balancer-internal: "{{ .Values.loadBalancerInternal | default true }}"
+#    service.beta.kubernetes.io/azure-dns-label-name: {{ .Values.dnsEntry }}
+    # From https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/rfc2136.md
+    external-dns.alpha.kubernetes.io/hostname: {{ .Values.dnsEntry }}
+    {{- end }}    
+    prometheus.io/port: "9779"
+    prometheus.io/scrape: "true"
+  labels:
+    app: {{ .Values.serviceName }}
+    provider: fabric8
+    version: "{{ .Values.imageTag }}"
+    group: net.fhirbox.pegacorn
+  name: {{ .Values.serviceName }}
+spec:
+  type: {{ .Values.serviceType | default "NodePort" }}
+  {{- if (.Values.loadBalancerIP) }} 
+  loadBalancerIP: {{ .Values.loadBalancerIP }}
+  {{- end }}
+  ports:
+  - port: 80
+    name: http
+    protocol: TCP
+  - port: 443
+    name: https
+    protocol: TCP
+  - port: 8021
+    name: freeswitch-cli
+    protocol: TCP
+  - port: 7443
+    name: webrtc
+    protocol: TCP
+    targetPort: 7443
+  - port: 5060
+    name: sipinternaltcp
+    protocol: TCP
+  - port: 5060
+    name: sipinternaludp
+    protocol: UDP
+    
+  selector:
+    app: {{ .Values.serviceName }}
+    provider: fabric8
+    group: net.fhirbox.pegacorn

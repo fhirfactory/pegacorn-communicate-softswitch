@@ -1,0 +1,4 @@
+# Softswitch server (FreeSwitch)
+docker build --rm --build-arg IMAGE_BUILD_TIMESTAMP="%date% %time%" -t pegacorn-communicate-softswitch:1.0.0-snapshot .
+
+helm upgrade pegacorn-softswitch-site-a --install --namespace site-a --set serviceName=pegacorn-softswitch,nodeAffinityLabel=fhirplace,imagePullPolicy=Never,basePort=30522,imageTag=1.0.0-snapshot,dataSourceServiceName=pegacorn-fusionpbx-dbaas,dataSourcePortAndDBName="30510/fusionpbx",hostPathCert=/data/certificates,hostPathKey=/data/certificates,hostPathPemKey=/data/certificates,dbUser=freeswitch,numOfPods=1 helm
