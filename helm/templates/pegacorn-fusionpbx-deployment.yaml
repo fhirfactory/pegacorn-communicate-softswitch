@@ -28,17 +28,17 @@ spec:
         group: net.fhirbox.pegacorn
         date: "{{ date "20060102-150405" .Release.Time }}"
     spec:
-      {{- if (.Values.acrSecretName) }} 
+      {{- if (.Values.acrSecretName) }}
       imagePullSecrets:
         - name: {{ .Values.acrSecretName }}
       {{- end }}
       #hostNetwork: true
       containers:
-      - env:          
+      - env:
         - name: DATASOURCE_SERVICE_NAME
           value: {{ .Values.dataSourceServiceName }}
         - name: DATASOURCE_PORT_AND_DBNAME
-          value: {{ .Values.dataSourcePortAndDBName }}          
+          value: {{ .Values.dataSourcePortAndDBName }}
         - name: FUSIONPBX_DATASOURCE_USER
           value: {{ .Values.dbUser }}
         - name: {{ upper .Values.serviceName | replace "-" "_" }}_{{ upper .Release.Namespace | replace "-" "_" }}_BASE_PORT
@@ -71,17 +71,13 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: {{ .Values.dockerRepo }}pegacorn-communicate-softswitch:{{ .Values.imageTag }}            
+        image: {{ .Values.dockerRepo }}pegacorn-communicate-softswitch:{{ .Values.imageTag }}
         imagePullPolicy: {{ .Values.imagePullPolicy | default "IfNotPresent" }}
-        lifecycle:
-          postStart:
-            exec:
-              command: ["/bin/bash","-c","echo 127.0.0.1 postgresql >> /etc/hosts; echo 127.0.0.1 fusionpbx >> /etc/hosts; echo 127.0.0.1 freeswitch >> /etc/hosts; echo 127.0.0.1 memcached >> /etc/hosts"]
         livenessProbe:
           tcpSocket:
             port: 5060
           initialDelaySeconds: 30
-        name: fusionpbx
+        name: freeswitch
         ports:
         - containerPort: 80
           name: http
@@ -94,6 +90,24 @@ spec:
           protocol: TCP
         - containerPort: 7443
           name: webrtc
+          protocol: TCP
+        - containerPort: 5066
+          name: webrtc-2
+          protocol: TCP
+        - containerPort: 5060
+          name: sipinternaltcp
+          protocol: TCP
+        - containerPort: 5080
+          name: sipexternaltcp
+          protocol: TCP
+        - containerPort: 8081
+          name: verto
+          protocol: TCP
+        - containerPort: 8082
+          name: verto-2
+          protocol: TCP
+        - containerPort: 5070
+          name: sipnatcp
           protocol: TCP
         readinessProbe:
           tcpSocket:
@@ -117,4 +131,3 @@ spec:
       - name: pemkey
         hostPath:
           path: {{ .Values.hostPathPemKey }}
-

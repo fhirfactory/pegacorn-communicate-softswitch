@@ -123,7 +123,9 @@ RUN mkdir -p /etc/freeswitch/tls
 
 # Configure SIP
 COPY internal.xml /etc/freeswitch/sip_profiles/internal.xml
+COPY external.xml /etc/freeswitch/sip_profiles/external.xml
 COPY verto.conf.xml /etc/freeswitch/autoload_configs/verto.conf.xml
+COPY vars.xml /etc/freeswitch/vars.xml
 
 # Test WebRTC - https://freeswitch.org/confluence/display/FREESWITCH/mod_verto
 COPY directoryusers /etc/freeswitch/directory/default/

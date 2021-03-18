@@ -1,14 +1,15 @@
+---
 apiVersion: v1
 kind: Service
 metadata:
   annotations:
-    {{- if (.Values.dnsEntry) }} 
+    {{- if (.Values.dnsEntry) }}
     # From https://docs.microsoft.com/en-us/azure/aks/internal-lb#create-an-internal-load-balancer
     service.beta.kubernetes.io/azure-load-balancer-internal: "{{ .Values.loadBalancerInternal | default true }}"
 #    service.beta.kubernetes.io/azure-dns-label-name: {{ .Values.dnsEntry }}
     # From https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/rfc2136.md
     external-dns.alpha.kubernetes.io/hostname: {{ .Values.dnsEntry }}
-    {{- end }}    
+    {{- end }}
     prometheus.io/port: "9779"
     prometheus.io/scrape: "true"
   labels:
@@ -18,20 +19,24 @@ metadata:
     group: net.fhirbox.pegacorn
   name: {{ .Values.serviceName }}
 spec:
-  type: {{ .Values.serviceType | default "NodePort" }}
-  {{- if (.Values.loadBalancerIP) }} 
-  loadBalancerIP: {{ .Values.loadBalancerIP }}
-  {{- end }}
   ports:
   - port: 80
     name: http
     protocol: TCP
+    targetPort: 80
   - port: 443
     name: https
     protocol: TCP
+    targetPort: 443
+    nodePort: 32610
   - port: 8021
     name: freeswitch-cli
     protocol: TCP
+    targetPort: 8021
+  - port: 5066
+    name: webrtc-2
+    protocol: TCP
+    targetPort: 5066
   - port: 7443
     name: webrtc
     protocol: TCP
@@ -39,11 +44,33 @@ spec:
   - port: 5060
     name: sipinternaltcp
     protocol: TCP
-  - port: 5060
-    name: sipinternaludp
-    protocol: UDP
-    
+    targetPort: 5060
+    nodePort: 30427
+  - port: 5070
+    name: sipnatcp
+    protocol: TCP
+    targetPort: 5070
+    nodePort: 30853
+  - port: 5080
+    name: sipexternaltcp
+    protocol: TCP
+    targetPort: 5080
+    nodePort: 30854
+  - port: 8081
+    name: verto
+    protocol: TCP
+    targetPort: 8081
+    nodePort: 30855
+  - port: 8082
+    name: verto-2
+    protocol: TCP
+    targetPort: 8082
+    nodePort: 30856
   selector:
     app: {{ .Values.serviceName }}
     provider: fabric8
     group: net.fhirbox.pegacorn
+  type: {{ .Values.serviceType | default "LoadBalancer" }}
+  {{- if (.Values.loadBalancerIP) }}
+  loadBalancerIP: {{ .Values.loadBalancerIP }}
+  {{- end }}

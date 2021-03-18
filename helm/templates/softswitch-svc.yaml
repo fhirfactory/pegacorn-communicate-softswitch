@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: softswitch
+    app: {{ .Values.serviceName }}
+  name: softswitch-udp
+spec:
+  type: NodePort
+  externalTrafficPolicy: Cluster
+  ports:
+  - port: 5060
+    name: sipinternaludp
+    protocol: UDP
+    targetPort: 5060
+    nodePort: 30857
+  - port: 5070
+    name: sipnatudp
+    protocol: UDP
+    targetPort: 5070
+    nodePort: 30858
+  - port: 5080
+    name: sipexternaludp
+    protocol: UDP
+    targetPort: 5080
+    nodePort: 30859
+  selector:
+    app: {{ .Values.serviceName }}
