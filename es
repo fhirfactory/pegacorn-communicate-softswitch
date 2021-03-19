@@ -1,4 +1,4 @@
-apiVersion: v1
+: v1
 kind: Service
 metadata:
   labels:

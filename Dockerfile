@@ -13,7 +13,8 @@ EXPOSE 5066/tcp 7443/tcp
 EXPOSE 8021/tcp
 EXPOSE 8081-8082/tcp
 EXPOSE 64535-65535/udp
-EXPOSE 16384-32768/udp
+#EXPOSE 16384-32768/udp
+EXPOSE 31316-31326/udp
 EXPOSE 2855-2856/tcp
 
 # Install Required Dependencies	
@@ -126,6 +127,7 @@ COPY internal.xml /etc/freeswitch/sip_profiles/internal.xml
 COPY external.xml /etc/freeswitch/sip_profiles/external.xml
 COPY verto.conf.xml /etc/freeswitch/autoload_configs/verto.conf.xml
 COPY vars.xml /etc/freeswitch/vars.xml
+COPY switch.conf.xml /etc/freeswitch/autoload_configs/switch.conf.xml
 
 # Test WebRTC - https://freeswitch.org/confluence/display/FREESWITCH/mod_verto
 COPY directoryusers /etc/freeswitch/directory/default/
