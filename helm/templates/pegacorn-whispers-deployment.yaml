@@ -71,7 +71,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: {{ .Values.dockerRepo }}pegacorn-communicate-softswitch:{{ .Values.imageTag }}
+        image: {{ .Values.dockerRepo }}pegacorn-communicate-whispers:{{ .Values.imageTag }}
         imagePullPolicy: {{ .Values.imagePullPolicy | default "IfNotPresent" }}
         livenessProbe:
           tcpSocket:

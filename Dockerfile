@@ -135,12 +135,12 @@ COPY conference.conf.xml /etc/freeswitch/autoload_configs/conference.conf.xml
 COPY default.xml /etc/freeswitch/directory/default.xml
 
 # Configure https for Nginx web server
-RUN touch /etc/nginx/sites-available/pegacorn-communicate.australiaeast.cloudapp.azure.com
+RUN touch /etc/nginx/sites-available/whispers.fhirfactory.net
 COPY default.conf /
-RUN cat default.conf > /etc/nginx/sites-available/pegacorn-communicate.australiaeast.cloudapp.azure.com \
-	&& ln -s /etc/nginx/sites-available/pegacorn-communicate.australiaeast.cloudapp.azure.com /etc/nginx/sites-enabled/pegacorn-communicate.australiaeast.cloudapp.azure.com \
-	&& ln -s /etc/ssl/private/ssl-cert-snakeoil.key /etc/ssl/private/pegacorn-communicate-freeswitch.site-a.key \
-	&& ln -s /etc/ssl/certs/ssl-cert-snakeoil.pem /etc/ssl/certs/pegacorn-communicate-freeswitch.site-a.crt \
+RUN cat default.conf > /etc/nginx/sites-available/whispers.fhirfactory.net \
+	&& ln -s /etc/nginx/sites-available/whispers.fhirfactory.net /etc/nginx/sites-enabled/whispers.fhirfactory.net \
+	&& ln -s /etc/ssl/private/ssl-cert-snakeoil.key /etc/ssl/private/pegacorn-communicate-whispers.site-a.key \
+	&& ln -s /etc/ssl/certs/ssl-cert-snakeoil.pem /etc/ssl/certs/pegacorn-communicate-whispers.site-a.crt \
 	&& rm /etc/nginx/sites-enabled/default \
 	&& rm default.conf
         
