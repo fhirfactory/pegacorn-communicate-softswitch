@@ -1,4 +1,4 @@
 # Softswitch server (FreeSwitch)
-docker build --rm --build-arg IMAGE_BUILD_TIMESTAMP="%date% %time%" -t pegacorn-communicate-softswitch:1.0.0-snapshot .
+docker build --rm --build-arg IMAGE_BUILD_TIMESTAMP="%date% %time%" -t pegacorn-communicate-whispers:1.0.0-snapshot .
 
-helm upgrade pegacorn-softswitch-site-a --install --namespace site-a --set serviceName=pegacorn-softswitch,nodeAffinityLabel=fhirplace,imagePullPolicy=Never,basePort=30522,imageTag=1.0.0-snapshot,hostPathCert=/data/certificates,hostPathKey=/data/certificates,hostPathPemKey=/data/certificates,dbUser=freeswitch,numOfPods=1 helm
+helm upgrade pegacorn-softswitch-site-a --install --namespace site-a --set serviceName=pegacorn-softswitch,imagePullPolicy=Never,basePort=30522,imageTag=1.0.0-snapshot,hostPathCert=/data/certificates,hostPathKey=/data/certificates,hostPathPemKey=/data/certificates,numOfPods=1 helm
