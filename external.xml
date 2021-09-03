@@ -63,8 +63,8 @@
     -->
     <param name="rtp-ip" value="$${local_ip_v4}"/>
     <param name="sip-ip" value="$${local_ip_v4}"/>
-    <param name="ext-rtp-ip" value="13.75.163.94"/>
-    <param name="ext-sip-ip" value="13.75.163.94"/>
+    <param name="ext-rtp-ip" value="58.109.127.40"/>
+    <param name="ext-sip-ip" value="58.109.127.40"/>
     <param name="rtp-timeout-sec" value="300"/>
     <param name="rtp-hold-timeout-sec" value="1800"/>
     <!--<param name="enable-3pcc" value="true"/>-->

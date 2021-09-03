@@ -164,7 +164,7 @@
     <!-- used to share presence info across sofia profiles -->
     <!-- Name of the db to use for this profile -->
     <!--<param name="dbname" value="share_presence"/>-->
-    <param name="presence-hosts" value="13.75.163.94"/>
+    <param name="presence-hosts" value="58.109.127.40"/>
     <param name="presence-privacy" value="$${presence_privacy}"/>
     <!-- ************************************************* -->
 
@@ -282,8 +282,8 @@
          auto                  - Use guessed ip.
          auto-nat              - Use ip learned from NAT-PMP or UPNP
     -->
-    <param name="ext-rtp-ip" value="13.75.163.94"/>
-    <param name="ext-sip-ip" value="13.75.163.94"/>
+    <param name="ext-rtp-ip" value="58.109.127.40"/>
+    <param name="ext-sip-ip" value="58.109.127.40"/>
 
     <!-- rtp inactivity timeout -->
     <param name="rtp-timeout-sec" value="300"/>
